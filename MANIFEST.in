@@ -1,1 +1,2 @@
 include didit/templates/report.mak
+include README.rst
