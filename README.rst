@@ -11,9 +11,10 @@ The Problem
     `Timeclocks are too cumbersome -- just keep track of the things I did.`
 
 In my job, I tend to do a lot of development which involves losing track of
-time and getting lost in other peoples' code.  I **also** happen to do user
-support which involves reacting to received emails, phone calls, and
-disturbances I notice on our systems.
+time and getting lost in other peoples' code.
+
+I **also** happen to do user support which involves reacting to received
+emails, phone calls, and disturbances I notice on our systems.
 
 Every two weeks, I have to report on "what I've been doing for the past two
 weeks" and tend to forget everything of importance (who I helped which
