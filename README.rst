@@ -28,14 +28,13 @@ doing X, Y, and Z, I didn't want to remember to punch in and out of my own
 workspace.  Thus, I wrote ``didit`` one afternoon.
 
 Features:
-
-    - Simple, CLI, and doesn't impose timeclock behavior on your otherwise
-      flexible self.
-    - Respects ``.rst`` markup just like `pypi` and `python`.
-    - Will look for an ``$EDITOR`` environment variable when it needs one.
-    - Keeps its database(s) in python ``shelve`` files in a ``~/.didit/``
-      folder making it easy to reference your done-deals from other python
-      code should you want to.
+ - Simple, CLI, and doesn't impose timeclock behavior on your otherwise
+   flexible self.
+ - Respects ``.rst`` markup just like `pypi` and `python`.
+ - Will look for an ``$EDITOR`` environment variable when it needs one.
+ - Keeps its database(s) in python ``shelve`` files in a ``~/.didit/``
+   folder making it easy to reference your done-deals from other python
+   code should you want to.
 
 There are too many tools like this out there.  This one isn't a game-changer,
 but its about as simple as can be.

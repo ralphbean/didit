@@ -6,7 +6,7 @@ long_description = f.read().strip()
 long_description = long_description.split('split here', 1)[1]
 f.close()
 
-version = '0.1.3'
+version = '0.1.4'
 
 setup(name='didit',
       version=version,
