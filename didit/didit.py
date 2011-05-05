@@ -25,7 +25,6 @@ message_template = """
 
 def _global_options(parser):
     parser.add_option("-c", "--category", dest="category",
-                      help="category for message",
                       default="general")
     return parser
 
@@ -40,6 +39,9 @@ def parse_options_report():
     parser = optparse.OptionParser()
     parser.add_option("-t", "--timespan", dest="timespan",
                       help="timespan for the report")
+    parser.add_option("-C", "--categories", dest="categories",
+                      default="",
+                      help="comma-separated list of categories")
     parser = _global_options(parser)
     return parser.parse_args()
 
@@ -54,18 +56,22 @@ def report():
     if not options.timespan:
         options.timespan = 'week'
 
-    filename = "{abspath}/{category}.db".format(
-        abspath=abspath, category=options.category)
-
-
     tmpl = lookup.get_template('didit.templates.report')
 
-    d = shelve.open(filename)
-    data = process_data(d)
-    d.close()
+    options.category = [options.category]
+    if options.categories:
+        options.category = [c.strip() for c in options.categories.split(',')]
+
+    data = {}
+    for category in options.category:
+        filename = "{abspath}/{category}.db".format(
+            abspath=abspath, category=category)
+        d = shelve.open(filename)
+        data.update(process_data(d))
+        d.close()
 
     options = {
-        'category' : options.category,
+        'category' : ", ".join(options.category),
         'timespan' : options.timespan,
         'data' : data,
     }
