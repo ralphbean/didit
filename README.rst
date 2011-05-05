@@ -8,13 +8,17 @@ Lightweight, commandline tool for keeping track of wtf I did last week.
 The Problem
 -----------
 
+    `Timeclocks are too cumbersome -- just keep track of the things I did.`
+
 In my job, I tend to do a lot of development which involves losing track of
 time and getting lost in other peoples' code.  I **also** happen to do user
 support which involves reacting to received emails, phone calls, and
-disturbances I notice on our systems.  Every two weeks, I have to report on
-"what I've been doing for the past two weeks" and tend to forget everything of
-importance (who I helped which actually translates to `who owes us something`)
-and only remember all the things that are really important to me -- my code.
+disturbances I notice on our systems.
+
+Every two weeks, I have to report on "what I've been doing for the past two
+weeks" and tend to forget everything of importance (who I helped which
+actually translates to `who owes us something`) and only remember all the
+things that are really important to me -- my code.
 
 All the time tracking tools I investigated (including the `online ones
 <http://www.toggl.com/>`_ and even the command line ones (`this one
@@ -50,7 +54,7 @@ Usage
 
     % didit-remember -c work -m 'Wrote `diddit`.  Thank god.'
     % didit-remember --message 'Helped L. User parallelize his ``Mathematica`` code.'
-    % didit-remember -c personal
+    % didit-remember -c personal       # <-- This launches `vim` for me!
 
     % didit-report --categories=work,general,personal
     Category 'work, general, personal' over timespan 'week'
