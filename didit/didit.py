@@ -24,14 +24,16 @@ message_template = """
 """
 
 def _global_options(parser):
-    parser.add_option("-c", "--category", dest="category",
-                      default="general")
+    parser.add_option("-c", "--category", dest="category")
     return parser
 
 def parse_options_remember():
     parser = optparse.OptionParser()
     parser.add_option("-m", "--message", dest="message",
                       help="message to remember")
+    parser.add_option("-f", "--force", dest="force",
+                      default=False, action="store_true",
+                      help="forcibly create a category")
     parser = _global_options(parser)
     return parser.parse_args()
 
@@ -81,6 +83,19 @@ def report():
 
 def remember():
     options, args = parse_options_remember()
+
+    if not options.category:
+        print "You must specify a category.  Aborting."
+        sys.exit(1)
+
+    filename = "{abspath}/{category}.db".format(
+        abspath=abspath, category=options.category)
+
+    if not os.path.isfile(filename) and not options.force:
+        print "Category '{category}' does not exist.  Use --force.".format(
+            category=options.category)
+        sys.exit(2)
+
     tmpl = message_template.format(category=options.category)
 
     if not options.message:
