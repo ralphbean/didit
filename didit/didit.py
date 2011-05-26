@@ -55,11 +55,15 @@ def process_data(d):
     fmt = lambda s : datetime.datetime.strptime(s[:-7], _fmt)
     return dict([(fmt(k), v) for k, v in d.iteritems()])
 
-def list_categories():
-    print "Categories (stored in {abspath}):".format(abspath=abspath)
+def all_categories():
     for fname in os.listdir(abspath):
         if not fname.endswith('.db'):
             continue
+        yield fname[:-3]
+
+def list_categories():
+    print "Categories (stored in {abspath}):".format(abspath=abspath)
+    for cname in all_categories():
         print "", fname[:-3]
 
 def report():
@@ -89,36 +93,31 @@ def report():
         categories = [c.strip() for c in options.categories.split(',')]
 
     if not categories:
-        print "You must specify at least one category.  Aborting."
-        sys.exit(1)
+        categories = all_categories()
 
-
-    data = {}
     for category in categories:
+        data = {}
         filename = "{abspath}/{category}.db".format(
             abspath=abspath, category=category)
         d = shelve.open(filename)
         data.update(process_data(d))
         d.close()
 
-    # Filter out old message
-    data = dict(
-        [
-            (timestamp, message) for timestamp, message in data.iteritems()
-            if timestamp > begin
-        ]
-    )
+        # Filter out old message
+        data = dict(
+            [
+                (timestamp, message) for timestamp, message in data.iteritems()
+                if timestamp > begin
+            ]
+        )
 
-    import pprint
-    pprint.pprint(data)
+        render_opts = {
+            'category' : category,
+            'timespan' : options.timespan,
+            'data' : data,
+        }
 
-    options = {
-        'category' : ", ".join(categories),
-        'timespan' : options.timespan,
-        'data' : data,
-    }
-
-    print tmpl.render(**options)
+        print tmpl.render(**render_opts)
 
 
 def remember():
