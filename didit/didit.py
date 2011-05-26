@@ -39,8 +39,8 @@ def parse_options_remember():
 
 def parse_options_report():
     parser = optparse.OptionParser()
-    parser.add_option("-t", "--timespan", dest="timespan",
-                      help="timespan for the report in days")
+    parser.add_option("-d", "--days", dest="days",
+                      help="number of days spanning the report")
     parser.add_option("-C", "--categories", dest="categories",
                       default="",
                       help="comma-separated list of categories")
@@ -73,16 +73,16 @@ def report():
         list_categories()
         return
 
-    if not options.timespan:
-        options.timespan = '7'
+    if not options.days:
+        options.days = '7'
 
     try:
-        options.timespan = int(options.timespan)
+        options.days = int(options.days)
     except ValueError as e:
         print "Timespan must be an integer (number of days).  Aborting."
         sys.exit(3)
 
-    begin = datetime.datetime.now()-datetime.timedelta(days=options.timespan)
+    begin = datetime.datetime.now()-datetime.timedelta(days=options.days)
 
     tmpl = lookup.get_template('didit.templates.report')
 
@@ -113,7 +113,7 @@ def report():
 
         render_opts = {
             'category' : category,
-            'timespan' : options.timespan,
+            'timespan' : options.days,
             'data' : data,
         }
 
