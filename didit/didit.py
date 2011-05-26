@@ -74,12 +74,19 @@ def report():
 
     tmpl = lookup.get_template('didit.templates.report')
 
-    options.category = [options.category]
+    categories = []
+    if options.category:
+        categories = [options.category]
     if options.categories:
-        options.category = [c.strip() for c in options.categories.split(',')]
+        categories = [c.strip() for c in options.categories.split(',')]
+
+    if not categories:
+        print "You must specify at least one category.  Aborting."
+        sys.exit(1)
+
 
     data = {}
-    for category in options.category:
+    for category in categories:
         filename = "{abspath}/{category}.db".format(
             abspath=abspath, category=category)
         d = shelve.open(filename)
@@ -87,7 +94,7 @@ def report():
         d.close()
 
     options = {
-        'category' : ", ".join(options.category),
+        'category' : ", ".join(categories),
         'timespan' : options.timespan,
         'data' : data,
     }
