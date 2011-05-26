@@ -44,6 +44,9 @@ def parse_options_report():
     parser.add_option("-C", "--categories", dest="categories",
                       default="",
                       help="comma-separated list of categories")
+    parser.add_option("-l", "--list", dest="list",
+                      default=False, action="store_true",
+                      help="show a list of all categories")
     parser = _global_options(parser)
     return parser.parse_args()
 
@@ -52,8 +55,19 @@ def process_data(d):
     fmt = lambda s : datetime.datetime.strptime(s[:-7], _fmt)
     return dict([(fmt(k), v) for k, v in d.iteritems()])
 
+def list_categories():
+    print "Categories (stored in {abspath}):".format(abspath=abspath)
+    for fname in os.listdir(abspath):
+        if not fname.endswith('.db'):
+            continue
+        print "", fname[:-3]
+
 def report():
     options, args = parse_options_report()
+
+    if options.list:
+        list_categories()
+        return
 
     if not options.timespan:
         options.timespan = 'week'
