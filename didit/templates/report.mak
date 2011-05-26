@@ -1,5 +1,5 @@
-Category '${category}' over timespan '${timespan}'
-${'-'*len("Category '" + category + "' over timespan '" + timespan + "'")}
+Category '${category}' over timespan '${str(timespan)}'
+${'-'*len("Category '" + category + "' last " + str(timespan) + " days")}
 <% printed = {} %>
 % for key in sorted(data.keys()):
 <% fmt_key = key.strftime("%Y-%m-%d") %>

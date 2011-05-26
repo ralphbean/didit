@@ -40,7 +40,7 @@ def parse_options_remember():
 def parse_options_report():
     parser = optparse.OptionParser()
     parser.add_option("-t", "--timespan", dest="timespan",
-                      help="timespan for the report")
+                      help="timespan for the report in days")
     parser.add_option("-C", "--categories", dest="categories",
                       default="",
                       help="comma-separated list of categories")
@@ -70,7 +70,15 @@ def report():
         return
 
     if not options.timespan:
-        options.timespan = 'week'
+        options.timespan = '7'
+
+    try:
+        options.timespan = int(options.timespan)
+    except ValueError as e:
+        print "Timespan must be an integer (number of days).  Aborting."
+        sys.exit(3)
+
+    begin = datetime.datetime.now()-datetime.timedelta(days=options.timespan)
 
     tmpl = lookup.get_template('didit.templates.report')
 
@@ -92,6 +100,17 @@ def report():
         d = shelve.open(filename)
         data.update(process_data(d))
         d.close()
+
+    # Filter out old message
+    data = dict(
+        [
+            (timestamp, message) for timestamp, message in data.iteritems()
+            if timestamp > begin
+        ]
+    )
+
+    import pprint
+    pprint.pprint(data)
 
     options = {
         'category' : ", ".join(categories),
