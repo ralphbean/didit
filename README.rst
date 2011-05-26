@@ -57,20 +57,24 @@ Usage
     % didit-remember -c personal       # <-- This launches `vim` for me!
 
     % didit-report --categories=work,general,personal
-    Category 'work, general, personal' over timespan 'week'
-    -------------------------------------------------------
-
-    ----
-
+    work
+    ~~~~
     2011-05-05:
-
       - Wrote `diddit`.  Thank god.
+
+    general
+    ~~~~~~~
+    2011-05-05:
       - Helped L. User parallelize his ``Mathematica`` code.
+
+    personal
+    ~~~~~~~~
+    2011-05-05:
       - Drank a beer.
 
 One of the benefits of ``.rst``::
 
-    % didit-report --category=work > thisweek.rst && rst2pdf thisweek.rst
+    % didit-report --days=7 -c work > thisweek.rst && rst2pdf thisweek.rst
 
 Get the source
 --------------
