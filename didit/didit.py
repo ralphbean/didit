@@ -7,11 +7,7 @@ import sys
 import os
 import os.path
 
-from tw2.core.dottedtemplatelookup import DottedTemplateLookup
-lookup = DottedTemplateLookup(input_encoding='utf-8',
-                              output_encoding='utf-8',
-                              imports=[],
-                              default_filters=[])
+import mako.template
 
 relpath = "~/.didit"
 abspath = os.path.expanduser("~/.didit")
@@ -84,7 +80,9 @@ def report():
 
     begin = datetime.datetime.now()-datetime.timedelta(days=options.days)
 
-    tmpl = lookup.get_template('didit.templates.report')
+    dirname = os.path.abspath(os.path.dirname(__file__))
+    filename = os.path.join(dirname, 'templates/report.mak')
+    tmpl = mako.template.Template(filename=filename)
 
     categories = []
     if options.category:

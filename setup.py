@@ -6,7 +6,7 @@ long_description = f.read().strip()
 long_description = long_description.split('split here', 1)[1]
 f.close()
 
-version = '0.2.0'
+version = '0.3.0'
 
 setup(name='didit',
       version=version,
@@ -37,7 +37,6 @@ setup(name='didit',
           "scripts/didit-report"
       ],
       install_requires=[
-          "tw2.core",
           "mako",
           # -*- Extra requirements: -*-
       ],
